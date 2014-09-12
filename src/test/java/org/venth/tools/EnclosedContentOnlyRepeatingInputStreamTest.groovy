@@ -1,7 +1,6 @@
 package org.venth.tools
 
 import com.google.common.collect.ComparisonChain
-import com.google.common.collect.ObjectArrays
 import com.google.common.collect.Ordering
 import spock.lang.Specification
 
@@ -15,7 +14,7 @@ class EnclosedContentOnlyRepeatingInputStreamTest extends Specification {
         def head = "Yoda".bytes
 
         and: 'content stream returns one byte'
-        def contentStream = Mock RepeatingInputStream
+        def contentStream = Mock InputStream
         contentStream.read() >>> [ 32, -1 ]
 
         and: 'a tail'
@@ -41,7 +40,7 @@ class EnclosedContentOnlyRepeatingInputStreamTest extends Specification {
         def head = "Yoda".bytes
 
         and: 'content stream returns one byte'
-        def contentStream = Mock RepeatingInputStream
+        def contentStream = Mock InputStream
         contentStream.read() >>> [32, -1]
 
         and: 'a tail'
@@ -71,7 +70,7 @@ class EnclosedContentOnlyRepeatingInputStreamTest extends Specification {
         def head = "Yoda".bytes
 
         and: 'content stream returns one byte'
-        def contentStream = Mock RepeatingInputStream
+        def contentStream = Mock InputStream
         contentStream.read() >>> [32, -1]
 
         and: 'a tail'
@@ -95,7 +94,7 @@ class EnclosedContentOnlyRepeatingInputStreamTest extends Specification {
         def head = "Yoda".bytes
 
         and: 'content stream is empty'
-        def contentStream = Mock RepeatingInputStream
+        def contentStream = Mock InputStream
         contentStream.read() >> -1
 
         and: 'a tail'

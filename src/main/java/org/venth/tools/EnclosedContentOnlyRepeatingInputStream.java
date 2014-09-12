@@ -25,7 +25,7 @@ public class EnclosedContentOnlyRepeatingInputStream extends InputStream {
      * Creates a stream that will first stream a head, then repeat the content and after
      * the size limit is reached, the stream will provide the tail
      *
-     * this constructor is only a facade to {@link #EnclosedContentOnlyRepeatingInputStream(byte[], RepeatingInputStream, byte[])}
+     * this constructor is only a facade to {@link #EnclosedContentOnlyRepeatingInputStream(byte[], InputStream, byte[])}
      *
      * @param head a head to stream before the content
      * @param content a content to be repeated until size limit is reached
@@ -37,11 +37,16 @@ public class EnclosedContentOnlyRepeatingInputStream extends InputStream {
     }
 
 
-    public EnclosedContentOnlyRepeatingInputStream(byte[] head, RepeatingInputStream repeatingContentStream, byte[] tail) {
-        enclosedStream = new SequenceInputStream(
-                new SequenceInputStream(new ByteArrayInputStream(head), repeatingContentStream),
-                new ByteArrayInputStream(tail)
+    public EnclosedContentOnlyRepeatingInputStream(byte[] head, InputStream contentStream, byte[] tail) {
+        this(
+            new ByteArrayInputStream(head),
+            contentStream,
+            new ByteArrayInputStream(tail)
         );
+    }
+
+    public EnclosedContentOnlyRepeatingInputStream(InputStream headStream, InputStream contentStream, InputStream tailStream) {
+        enclosedStream = new SequenceInputStream(new SequenceInputStream(headStream, contentStream), tailStream);
     }
 
 
